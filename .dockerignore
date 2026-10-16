@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.git
+.gitignore
+venv/
+backend/venv/
+backend/uploads/*
+backend/vault.db*
+.DS_Store
+
+

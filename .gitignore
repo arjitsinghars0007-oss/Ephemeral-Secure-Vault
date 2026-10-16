@@ -1,0 +1,22 @@
+# Python environments & cache
+venv/
+__pycache__/
+*.pyc
+
+# Uploads & Encrypted files
+uploads/
+*.enc
+
+# SQLite Database (including WAL mode files)
+*.db
+*.db-shm
+*.db-wal
+
+# Secrets & Certificates
+.env
+cert.pem
+key.pem
+
+# OS generated files
+.DS_Store
+
