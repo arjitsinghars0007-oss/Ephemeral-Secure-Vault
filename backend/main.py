@@ -183,6 +183,5 @@ def download_file(file_id: str, decryption_key: str, db: Session = Depends(get_d
     )
 
 
-# --- STATIC FILES MOUNT ---
-app.mount("/", StaticFiles(directory="../frontend", html=True), name="frontend")
+
 
