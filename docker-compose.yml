@@ -3,6 +3,7 @@ version: '3.8'
 services:
   backend:
     build: ./backend
+    restart: unless-stopped  # <-- Adds auto-start behavior
     ports:
       - "8000:8000"
     environment:
@@ -14,6 +15,7 @@ services:
   frontend:
     image: node:20-alpine
     working_dir: /app
+    restart: unless-stopped  # <-- Adds auto-start behavior
     volumes:
       - ./frontend:/app
     ports:
