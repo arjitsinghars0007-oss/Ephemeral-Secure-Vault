@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from fastapi import FastAPI, UploadFile, File, Depends, HTTPException, Response, Security, status
 from fastapi.security.api_key import APIKeyHeader
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import Column, String, DateTime, Integer
 from sqlalchemy.orm import Session
 from cryptography.fernet import Fernet
@@ -75,6 +76,17 @@ async def lifespan(app: FastAPI):
 
 # 3. Initialize FastAPI app with the lifespan manager
 app = FastAPI(title="Ephemeral Vault API", lifespan=lifespan)
+
+# --- CORS MIDDLEWARE ---
+# Enable CORS so the React frontend can make requests
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Update this to your frontend's URL in production (e.g., "http://localhost:3000")
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # --- API KEY SECURITY ---
 API_KEY_HEADER = APIKeyHeader(name="X-API-Key", auto_error=False)
@@ -173,6 +185,4 @@ def download_file(file_id: str, decryption_key: str, db: Session = Depends(get_d
 
 # --- STATIC FILES MOUNT ---
 app.mount("/", StaticFiles(directory="../frontend", html=True), name="frontend")
-
-
 
