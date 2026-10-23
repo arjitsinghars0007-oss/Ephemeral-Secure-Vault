@@ -1,28 +1,35 @@
-version: '3.8'
-
 services:
   backend:
     build: ./backend
-    restart: unless-stopped  # <-- Adds auto-start behavior
+    restart: unless-stopped
     ports:
       - "8000:8000"
     environment:
-      - VAULT_API_KEY=secure-vault-2026
+      - VAULT_API_KEY=${VAULT_API_KEY:-secure-vault-2026}
+      - ALLOWED_ORIGINS=http://localhost:5173
     volumes:
-      - ./backend/uploads:/app/uploads
-      - ./backend/secure_vault.db:/app/secure_vault.db
+      - vault_uploads:/app/uploads
+      - vault_db:/app/secure_vault.db
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   frontend:
     image: node:20-alpine
     working_dir: /app
-    restart: unless-stopped  # <-- Adds auto-start behavior
+    restart: unless-stopped
     volumes:
       - ./frontend:/app
+      - /app/node_modules
     ports:
       - "5173:5173"
     command: sh -c "npm install && npm run dev -- --host"
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
 
-
-      
+volumes:
+  vault_uploads:
+  vault_db:
