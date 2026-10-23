@@ -1,22 +1,35 @@
-# Python environments & cache
-venv/
+# Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+venv/
+backend/venv/
 
-# Uploads & Encrypted files
-uploads/
-*.enc
-
-# SQLite Database (including WAL mode files)
+# Database
+backend/data/
 *.db
 *.db-shm
 *.db-wal
 
-# Secrets & Certificates
+# Encrypted uploads
+backend/uploads/
+*.enc
+
+# Secrets & SSL certificates
 .env
+backend/.env
 cert.pem
 key.pem
+*.pem
+*.key
 
-# OS generated files
+# Test / scratch artefacts
+backend/results/
+
+# Node
+frontend/node_modules/
+
+# OS
 .DS_Store
-
+Thumbs.db

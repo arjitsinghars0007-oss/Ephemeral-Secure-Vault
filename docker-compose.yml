@@ -9,10 +9,9 @@ services:
       - ALLOWED_ORIGINS=http://localhost:5173
     volumes:
       - vault_uploads:/app/uploads
-      - vault_db:/app/secure_vault.db
-
+      - vault_db:/app/data
     healthcheck:
-      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/docs')"]
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
       interval: 10s
       timeout: 5s
       retries: 3
@@ -33,3 +32,4 @@ services:
 volumes:
   vault_uploads:
   vault_db:
+

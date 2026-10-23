@@ -1,0 +1,29 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyw
+
+# Database (SQLite + WAL mode artefacts)
+data/
+*.db
+*.db-shm
+*.db-wal
+
+# Uploaded & encrypted files
+uploads/
+*.enc
+
+# Secrets & certificates
+.env
+*.pem
+*.key
+
+# Test artefacts
+results/
+
+# OS
+.DS_Store
+

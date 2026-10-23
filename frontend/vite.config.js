@@ -1,15 +1,17 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import basicSsl from '@vitejs/plugin-basic-ssl'
 
+// No basicSsl — the Vite dev proxy forwards /api/* to the backend over plain HTTP
+// internally, so there is no mixed-content issue. SSL termination belongs at a
+// reverse proxy (Nginx/Caddy) in production, not in the dev server.
 export default defineConfig({
-  plugins: [react(), basicSsl()],
+  plugins: [react()],
   server: {
     port: 5173,
     host: true,
     proxy: {
       '/api': {
-        target: 'http://backend:8000',
+        target: 'http://localhost:8000',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
