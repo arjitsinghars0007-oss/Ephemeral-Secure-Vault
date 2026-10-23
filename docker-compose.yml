@@ -10,10 +10,11 @@ services:
     volumes:
       - vault_uploads:/app/uploads
       - vault_db:/app/secure_vault.db
+
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
-      interval: 30s
-      timeout: 10s
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/docs')"]
+      interval: 10s
+      timeout: 5s
       retries: 3
 
   frontend:
@@ -27,8 +28,7 @@ services:
       - "5173:5173"
     command: sh -c "npm install && npm run dev -- --host"
     depends_on:
-      backend:
-        condition: service_healthy
+      - backend
 
 volumes:
   vault_uploads:

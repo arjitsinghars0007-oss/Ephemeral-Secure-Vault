@@ -190,6 +190,6 @@ def download_file(
 
 
 # --- HEALTH CHECK ---
-@app.get("/health")
+@app.get("/")
 def health_check():
     return {"status": "ok"}

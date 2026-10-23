@@ -1,7 +1,15 @@
+import os
 from sqlalchemy import create_engine, event
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///./secure_vault.db"
+# Ensure a dedicated 'data' directory exists using an absolute path
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(BASE_DIR, "data")
+os.makedirs(DATA_DIR, exist_ok=True)
+
+# Absolute path for the SQLite database file
+DB_PATH = os.path.join(DATA_DIR, "secure_vault.db")
+SQLALCHEMY_DATABASE_URL = f"sqlite:///{DB_PATH}"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
@@ -23,3 +31,5 @@ def get_db():
         yield db
     finally:
         db.close()
+
+        
